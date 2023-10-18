@@ -3,6 +3,7 @@ package com.example.crudapp.Adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ListAdapter
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.titleTextView)
         val description: TextView = itemView.findViewById(R.id.desTextView)
+        val multiNotes: TextView = itemView.findViewById(R.id.multiNotestextView)
         val cardView: CardView = itemView.findViewById(R.id.cardView)
     }
 
@@ -35,6 +37,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
         var currentNote: Note = notes[position]
         holder.title.text = currentNote.title
         holder.description.text = currentNote.des
+        holder.multiNotes.text = currentNote.mutiNots
     }
 
     //for live data

@@ -1,29 +1,26 @@
 package com.example.crudapp.View
 
-import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
+
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.crudapp.Adapter.NoteAdapter
+import com.example.crudapp.Model.Note
 import com.example.crudapp.NoteApplication
 import com.example.crudapp.R
-import com.example.crudapp.Repository.NoteRepository
 import com.example.crudapp.ViewModel.NoteViewModel
 import com.example.crudapp.ViewModel.NoteViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.search.SearchBar
-import com.google.android.material.search.SearchView
-import com.google.android.material.shape.MaterialShapeDrawable
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,18 +28,21 @@ class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var noteAdapter: NoteAdapter
 
+    lateinit var addActivityResultLauncher: ActivityResultLauncher<Intent>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportActionBar?.title = "Note App"
-
+        //for recycler view
         recyclerView = findViewById(R.id.noteRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        
         noteAdapter = NoteAdapter()
         recyclerView.adapter = noteAdapter
 
+        registerActivityResultLauncher()
+
+        //for viewModel
         val viewModelFactory = NoteViewModelFactory((application as NoteApplication).repository)
 
         noteViewModel = ViewModelProvider(this, viewModelFactory).get(NoteViewModel::class.java)
@@ -58,11 +58,38 @@ class MainActivity : AppCompatActivity() {
         addNoteButton.setOnClickListener {
 
             val intent = Intent(this, NoteCreateActivity::class.java)
-            startActivity(intent)
+            //startActivity(intent)
+            addActivityResultLauncher.launch(intent)
 
         }
 
+        val deleteAllNotes: ImageView = findViewById(R.id.deleteAllNotes)
+        deleteAllNotes.setOnClickListener {
+            Toast.makeText(applicationContext, "Delete icon is clicked", Toast.LENGTH_SHORT).show()
+        }
 
+    }
+
+    fun registerActivityResultLauncher() {
+       addActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()
+           , ActivityResultCallback { result ->
+
+               val resultCode = result.resultCode
+               val data = result.data
+
+               if(resultCode == RESULT_OK && data != null) {
+
+                   val noteTitle: String = data.getStringExtra("title").toString()
+                   val noteDes: String = data.getStringExtra("des").toString()
+                   val noteMultiNotes: String = data.getStringExtra("multinote").toString()
+
+                   val note = Note(noteTitle, noteDes, noteMultiNotes)
+
+                   //add to database
+                   noteViewModel.insert(note)
+               }
+
+           })
     }
     
 }

@@ -49,15 +49,7 @@ abstract class NoteDatabase: RoomDatabase() {
                 //coroutine
                 scope.launch {
                     val noteDao = database.getNoteDao()
-                    noteDao.insert(Note("Title 1", "Description"))
-                    noteDao.insert(Note("Title 2", "Description"))
-                    noteDao.insert(Note("Title 3", "Description"))
-                    noteDao.insert(Note("Title 3", "Description"))
-                    noteDao.insert(Note("Title 3", "Description"))
-                    noteDao.insert(Note("Title 3", "Description"))
-                    noteDao.insert(Note("Title 3", "Description"))
-                    noteDao.insert(Note("Title 3", "Description"))
-                    noteDao.insert(Note("Title 3", "Description"))
+                    noteDao.insert(Note("Title 1", "Description demo", "note demo"))
                 }
             }
         }
