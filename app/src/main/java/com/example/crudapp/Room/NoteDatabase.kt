@@ -52,6 +52,12 @@ abstract class NoteDatabase: RoomDatabase() {
                     noteDao.insert(Note("Title 1", "Description"))
                     noteDao.insert(Note("Title 2", "Description"))
                     noteDao.insert(Note("Title 3", "Description"))
+                    noteDao.insert(Note("Title 3", "Description"))
+                    noteDao.insert(Note("Title 3", "Description"))
+                    noteDao.insert(Note("Title 3", "Description"))
+                    noteDao.insert(Note("Title 3", "Description"))
+                    noteDao.insert(Note("Title 3", "Description"))
+                    noteDao.insert(Note("Title 3", "Description"))
                 }
             }
         }

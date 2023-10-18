@@ -1,7 +1,15 @@
 package com.example.crudapp.View
 
+import android.content.Context
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +20,10 @@ import com.example.crudapp.R
 import com.example.crudapp.Repository.NoteRepository
 import com.example.crudapp.ViewModel.NoteViewModel
 import com.example.crudapp.ViewModel.NoteViewModelFactory
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.search.SearchBar
+import com.google.android.material.search.SearchView
+import com.google.android.material.shape.MaterialShapeDrawable
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        supportActionBar?.title = "Note App"
 
         recyclerView = findViewById(R.id.noteRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -40,5 +54,15 @@ class MainActivity : AppCompatActivity() {
             
         }) //live data method
 
+        val addNoteButton: FloatingActionButton = findViewById(R.id.addNoteButton)
+        addNoteButton.setOnClickListener {
+
+            val intent = Intent(this, NoteCreateActivity::class.java)
+            startActivity(intent)
+
+        }
+
+
     }
+    
 }
