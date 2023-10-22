@@ -1,5 +1,7 @@
 package com.example.crudapp.View
 
+import android.content.ClipData.Item
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +11,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.crudapp.Adapter.NoteAdapter
@@ -54,6 +58,27 @@ class MainActivity : AppCompatActivity() {
             
         }) //live data method
 
+
+        //for deleting notes
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0
+            , ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                //viewHolder.adapterPosition //position of notes
+                noteViewModel.delete(noteAdapter.getNote(viewHolder.adapterPosition))
+                Toast.makeText(applicationContext, "Note has been deleted", Toast.LENGTH_SHORT).show()
+            }
+
+        }).attachToRecyclerView(recyclerView) //for deleting
+
         val addNoteButton: FloatingActionButton = findViewById(R.id.addNoteButton)
         addNoteButton.setOnClickListener {
 
@@ -65,10 +90,31 @@ class MainActivity : AppCompatActivity() {
 
         val deleteAllNotes: ImageView = findViewById(R.id.deleteAllNotes)
         deleteAllNotes.setOnClickListener {
-            Toast.makeText(applicationContext, "Delete icon is clicked", Toast.LENGTH_SHORT).show()
+            showDialogMessage()
+            
         }
 
+
     }
+
+    fun showDialogMessage() {
+        val dialogMessage = AlertDialog.Builder(this)
+            .setTitle("Delete All Notes")
+            .setMessage("Do you want to delete all notes?")
+        
+        dialogMessage.setNegativeButton("No", DialogInterface.OnClickListener { dialog, i ->
+            dialog.cancel()
+        })
+        dialogMessage.setPositiveButton("Yes", DialogInterface.OnClickListener{ dialog, i ->
+            noteViewModel.deleteAllNotes()
+            Toast.makeText(applicationContext, "All notes have been deleted", Toast.LENGTH_SHORT).show()
+        })
+
+
+        dialogMessage.create().show()
+
+    }
+
 
     fun registerActivityResultLauncher() {
        addActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()

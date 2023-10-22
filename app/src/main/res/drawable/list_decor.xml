@@ -6,5 +6,5 @@
     <!--        android:color="@android:color/holo_purple"-->
     <!--        android:width="2dp"/>-->
     <solid
-        android:color="#EDEDED"/>
+        android:color="#E594FB"/>
 </shape>

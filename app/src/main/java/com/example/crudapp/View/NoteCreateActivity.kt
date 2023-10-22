@@ -27,7 +27,12 @@ class NoteCreateActivity : AppCompatActivity() {
         noteSave = findViewById(R.id.noteSaveButton)
 
         noteSave.setOnClickListener {
-            saveNote()
+            if (editTextTitle.text.isEmpty() && editTextDes.text.isEmpty() && editTextMultiNote.text.isEmpty()){
+                finish()
+            } else {
+                saveNote()
+            }
+
         }
 
         noteCancel.setOnClickListener {
