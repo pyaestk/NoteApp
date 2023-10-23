@@ -29,19 +29,18 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class MainActivity : AppCompatActivity() {
 
     lateinit var noteViewModel: NoteViewModel
-    lateinit var recyclerView: RecyclerView
-    lateinit var noteAdapter: NoteAdapter
 
     lateinit var addActivityResultLauncher: ActivityResultLauncher<Intent>
+    lateinit var updateActivityResultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         //for recycler view
-        recyclerView = findViewById(R.id.noteRecyclerView)
+        val recyclerView: RecyclerView = findViewById(R.id.noteRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        noteAdapter = NoteAdapter()
+        val noteAdapter = NoteAdapter(this@MainActivity)
         recyclerView.adapter = noteAdapter
 
         registerActivityResultLauncher()
@@ -136,6 +135,28 @@ class MainActivity : AppCompatActivity() {
                }
 
            })
+
+        updateActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()
+            , ActivityResultCallback { updateResult ->
+
+                val resultCode = updateResult.resultCode
+                val data = updateResult.data
+
+                if(resultCode == RESULT_OK && data != null) {
+
+                    val updatedTitle: String = data.getStringExtra("updatedTitle").toString()
+                    val updatedDes: String = data.getStringExtra("updatedDes").toString()
+                    val updatedMultiNotes: String = data.getStringExtra("updatedMultiNotes").toString()
+                    val noteId = data.getIntExtra("noteId", -1)
+
+                    val newNote = Note(updatedTitle, updatedDes, updatedMultiNotes)
+
+                    newNote.id = noteId
+                    noteViewModel.update(newNote)
+
+                }
+
+            })
     }
     
 }

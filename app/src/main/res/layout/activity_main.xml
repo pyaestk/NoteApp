@@ -25,7 +25,7 @@
             android:layout_weight="1"
             android:text="Note App"
             android:textColor="#8E24AA"
-            android:textSize="34sp"
+            android:textSize="30sp"
             android:textStyle="bold|italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

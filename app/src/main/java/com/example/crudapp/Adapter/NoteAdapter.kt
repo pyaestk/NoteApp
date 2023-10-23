@@ -1,18 +1,19 @@
 package com.example.crudapp.Adapter
 
 import android.annotation.SuppressLint
-import android.graphics.Color
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListAdapter
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.crudapp.Model.Note
 import com.example.crudapp.R
+import com.example.crudapp.View.MainActivity
+import com.example.crudapp.View.NoteUpdateActivity
 
-class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(private val activity: MainActivity) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     var notes: List<Note> = ArrayList()
 
@@ -20,7 +21,7 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
         val title: TextView = itemView.findViewById(R.id.titleTextView)
         val description: TextView = itemView.findViewById(R.id.desTextView)
         val multiNotes: TextView = itemView.findViewById(R.id.multiNotestextView)
-        val divider: View = itemView.findViewById(R.id.divider2)
+
         val cardView: CardView = itemView.findViewById(R.id.cardView)
     }
 
@@ -42,20 +43,33 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
         holder.title.text = currentNote.title
         holder.description.text = currentNote.des
-        holder.multiNotes.text = currentNote.mutiNots
+        holder.multiNotes.text = currentNote.multiNotes
 
-        if (holder.title.text.isEmpty()) {
-            holder.title.text = "Unknown Title"
-        }
+//        if (holder.title.text.isEmpty()) {
+//            holder.title.text = "Unknown Title"
+//        }
+//
+//        if (holder.description.text.isEmpty()) {
+//            holder.description.text = "No description"
+//        }
+//
+//        if (holder.multiNotes.text.isEmpty()) {
+//            holder.multiNotes.text = "No notes"
+//            holder.multiNotes.setTextColor(Color.parseColor("#858585"))
+//            holder.divider.visibility = View.GONE
+//        }
 
-        if (holder.description.text.isEmpty()) {
-            holder.description.text = "No description"
-        }
+        holder.cardView.setOnClickListener {
 
-        if (holder.multiNotes.text.isEmpty()) {
-            holder.multiNotes.text = "No notes"
-            holder.multiNotes.setTextColor(Color.parseColor("#858585"))
-            holder.divider.visibility = View.GONE
+            val intent = Intent(activity, NoteUpdateActivity::class.java)
+            intent.putExtra("currentTitle", currentNote.title)
+            intent.putExtra("currentDes", currentNote.des)
+            intent.putExtra("currentMultiNotes", currentNote.multiNotes)
+            //for ID
+            intent.putExtra("currentId", currentNote.id)
+            //activity result launcher
+            activity.updateActivityResultLauncher.launch(intent)
+
         }
 
     }

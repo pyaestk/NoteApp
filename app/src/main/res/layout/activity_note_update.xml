@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".View.NoteUpdateActivity">
+
+    <ImageView
+        android:id="@+id/noteSaveButtonUpdate"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_save" />
+
+    <ImageView
+        android:id="@+id/noteCloseButtonUpdate"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/noteSaveButtonUpdate"
+        app:layout_constraintEnd_toStartOf="@+id/noteSaveButtonUpdate"
+        app:layout_constraintTop_toTopOf="@+id/noteSaveButtonUpdate"
+        app:srcCompat="@drawable/ic_close" />
+
+    <EditText
+        android:id="@+id/editTextTitleUpdate"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@android:color/transparent"
+        android:ellipsize="end"
+        android:hint="Title"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingStart="10dp"
+        android:textColor="@color/black"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toStartOf="@+id/noteCloseButtonUpdate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTitleUpdate"
+        app:layout_constraintStart_toStartOf="@+id/editTextTitleUpdate"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTitleUpdate">
+
+    <View
+        android:layout_width="7dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:background="#8E24AA" />
+
+        <EditText
+            android:id="@+id/editTextDesUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/NoUnderlineEditTextStyle"
+            android:ellipsize="end"
+            android:hint="Description"
+            android:inputType="text"
+            android:maxLines="1"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            tools:text="this is description" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextNotesUpdate"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/search_background"
+        android:gravity="start|top"
+        android:hint="Enter your notes"
+        android:inputType="textMultiLine"
+        android:padding="20dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
