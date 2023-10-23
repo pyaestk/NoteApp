@@ -7,6 +7,18 @@
     tools:context=".View.MainActivity">
 
 
+    <ImageView
+        android:id="@+id/emptyListView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="32dp"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/noteRecyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:srcCompat="@drawable/books" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -81,15 +93,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar"
-        tools:listitem="@layout/note_list_item" />
+        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNoteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         android:clickable="true"
         app:backgroundTint="#E594FB"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -97,6 +108,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_add" />
+
+    <TextView
+        android:id="@+id/EmptyListDes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No note yet"
+        android:textColor="#717171"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/emptyListView"
+        app:layout_constraintStart_toStartOf="@+id/emptyListView"
+        app:layout_constraintTop_toBottomOf="@+id/emptyListView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

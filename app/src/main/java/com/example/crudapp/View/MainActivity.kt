@@ -4,9 +4,11 @@ import android.content.ClipData.Item
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -33,14 +35,22 @@ class MainActivity : AppCompatActivity() {
     lateinit var addActivityResultLauncher: ActivityResultLauncher<Intent>
     lateinit var updateActivityResultLauncher: ActivityResultLauncher<Intent>
 
+    lateinit var emptyList: ImageView
+    lateinit var emptyListDes: TextView
+
+    lateinit var noteAdapter: NoteAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        emptyList = findViewById(R.id.emptyListView)
+        emptyListDes = findViewById(R.id.EmptyListDes)
+
         //for recycler view
         val recyclerView: RecyclerView = findViewById(R.id.noteRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val noteAdapter = NoteAdapter(this@MainActivity)
+        noteAdapter = NoteAdapter(this@MainActivity)
         recyclerView.adapter = noteAdapter
 
         registerActivityResultLauncher()
@@ -54,6 +64,8 @@ class MainActivity : AppCompatActivity() {
         noteViewModel.myAllNotes.observe(this, Observer { notes ->
 
             noteAdapter.setNote(notes)
+            //if there is not list
+            checkEmptyListVisibility()
             
         }) //live data method
 
@@ -157,6 +169,16 @@ class MainActivity : AppCompatActivity() {
                 }
 
             })
+    }
+
+    fun checkEmptyListVisibility() {
+        if (noteAdapter.itemCount != 0) {
+            emptyList.visibility = View.GONE
+            emptyListDes.visibility = View.GONE
+        } else {
+            emptyList.visibility = View.VISIBLE
+            emptyListDes.visibility = View.VISIBLE
+        }
     }
     
 }

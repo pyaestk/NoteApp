@@ -2,6 +2,7 @@ package com.example.crudapp.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +22,7 @@ class NoteAdapter(private val activity: MainActivity) : RecyclerView.Adapter<Not
         val title: TextView = itemView.findViewById(R.id.titleTextView)
         val description: TextView = itemView.findViewById(R.id.desTextView)
         val multiNotes: TextView = itemView.findViewById(R.id.multiNotestextView)
-
+        val divider: View = itemView.findViewById(R.id.divider2)
         val cardView: CardView = itemView.findViewById(R.id.cardView)
     }
 
@@ -45,19 +46,19 @@ class NoteAdapter(private val activity: MainActivity) : RecyclerView.Adapter<Not
         holder.description.text = currentNote.des
         holder.multiNotes.text = currentNote.multiNotes
 
-//        if (holder.title.text.isEmpty()) {
-//            holder.title.text = "Unknown Title"
-//        }
-//
-//        if (holder.description.text.isEmpty()) {
-//            holder.description.text = "No description"
-//        }
-//
-//        if (holder.multiNotes.text.isEmpty()) {
-//            holder.multiNotes.text = "No notes"
-//            holder.multiNotes.setTextColor(Color.parseColor("#858585"))
-//            holder.divider.visibility = View.GONE
-//        }
+        if (holder.title.text.isEmpty()) {
+            holder.title.text = "Unknown Title"
+        }
+
+        if (holder.description.text.isEmpty()) {
+            holder.description.text = "No description"
+        }
+
+        if (holder.multiNotes.text.isEmpty()) {
+            holder.multiNotes.text = "No notes"
+            holder.multiNotes.setTextColor(Color.parseColor("#858585"))
+            holder.divider.visibility = View.INVISIBLE
+        }
 
         holder.cardView.setOnClickListener {
 
