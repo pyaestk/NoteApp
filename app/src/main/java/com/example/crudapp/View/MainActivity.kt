@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -26,6 +25,7 @@ import com.example.crudapp.R
 import com.example.crudapp.ViewModel.NoteViewModel
 import com.example.crudapp.ViewModel.NoteViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.search.SearchView
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         emptyList = findViewById(R.id.emptyListView)
         emptyListDes = findViewById(R.id.EmptyListDes)
+
 
         //for recycler view
         val recyclerView: RecyclerView = findViewById(R.id.noteRecyclerView)
@@ -69,6 +70,20 @@ class MainActivity : AppCompatActivity() {
             
         }) //live data method
 
+        //for searching
+        val searchView: androidx.appcompat.widget.SearchView = findViewById(R.id.homeSearchBar)
+        searchView.setOnQueryTextListener(object: androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Handle query submission here
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Handle query text changes here
+                noteAdapter.filter.filter(newText)
+                return true
+            }
+        })
 
         //for deleting notes
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0

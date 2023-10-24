@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +16,7 @@ import com.example.crudapp.R
 import com.example.crudapp.View.MainActivity
 import com.example.crudapp.View.NoteUpdateActivity
 
-class NoteAdapter(private val activity: MainActivity) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(private val activity: MainActivity) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterable {
 
     var notes: List<Note> = ArrayList()
 
@@ -78,6 +80,7 @@ class NoteAdapter(private val activity: MainActivity) : RecyclerView.Adapter<Not
     //for live data
     fun setNote(myNotes: List<Note>) {
         this.notes = myNotes
+        this.originalNotes = myNotes
         notifyDataSetChanged()
     }
 
@@ -86,5 +89,41 @@ class NoteAdapter(private val activity: MainActivity) : RecyclerView.Adapter<Not
 
         return notes[position]
 
+    }
+
+
+    //searching
+    private var originalNotes: List<Note> = ArrayList(notes)
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val filteredList = ArrayList<Note>()
+
+                if (constraint.isNullOrBlank()) {
+                    filteredList.addAll(originalNotes)
+                } else {
+                    val filterPattern = constraint.toString().trim { it <= ' ' }
+                        .toLowerCase()
+
+                    for (note in originalNotes) {
+                        if (note.title.toLowerCase().contains(filterPattern) ||
+                            note.des.toLowerCase().contains(filterPattern) ||
+                            note.multiNotes.toLowerCase().contains(filterPattern)) {
+                            filteredList.add(note)
+                        }
+                    }
+                }
+
+                val results = FilterResults()
+                results.values = filteredList
+
+                return results
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                notes = results?.values as List<Note>
+                notifyDataSetChanged()
+            }
+        }
     }
 }
